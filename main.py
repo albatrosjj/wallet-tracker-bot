@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from src.chains.evm import get_latest_block, get_recent_txs
+from src.chains.evm import get_latest_block, get_recent_txs, CHAIN_NAMES
 from src.analyzer import analyze_wallet, load_state, save_state
 from src.notifier import init as tg_init, send_alert, send_summary
 from src.notifier import process_commands
