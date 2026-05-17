@@ -1,0 +1,24 @@
+{
+  "telegram": {
+    "bot_token": "8688597779:AAHFe6CgGzWtL8zaLSCu1ozUtJXpdl58JY8",
+    "chat_id": "1514101704"
+  },
+  "rpc": {
+    "ethereum": "https://eth.drpc.org",
+    "bsc": "https://bsc.drpc.org"
+  },
+  "wallets": [
+    "0x3a12dc32d9a9df4f802622a18a78923dcde62691",
+    "0x162c6f80a62bf1dbf011da8096b58616d08561e4",
+    "0xbdd705c1bea262817f6d3a5cf480cceccae8d0ab",
+    "0x2daa0456786a065ee17d1edacc231f9acd6f018b",
+    "0xce68ea235f0c7ab151d87cb0144e3fd8a5bd9116"
+  ],
+  "settings": {
+    "scan_interval_minutes": 30,
+    "min_value_usd": 10,
+    "max_tx_per_wallet": 20,
+    "profit_threshold_buy": 0.6,
+    "profit_threshold_sell": -0.3
+  }
+}

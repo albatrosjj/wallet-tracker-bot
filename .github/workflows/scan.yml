@@ -1,0 +1,34 @@
+name: Wallet Scanner
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'   # Her 30 dakikada bir
+  workflow_dispatch:          # Manuel tetikleme için
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Python kurulumu
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Bağımlılıkları yükle
+        run: pip install -r requirements.txt
+
+      - name: Cüzdanları tara ve analiz et
+        run: python main.py
+        env:
+          PYTHONUNBUFFERED: 1
+
+      - name: State güncellemesini commit et
+        run: |
+          git config --global user.name "wallet-tracker-bot"
+          git config --global user.email "bot@github.com"
+          git add data/state.json
+          git diff --quiet && git diff --cached --quiet || \
+            git commit -m "bot: state güncellemesi $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git push
