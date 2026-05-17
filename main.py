@@ -62,9 +62,14 @@ def main():
     for wallet in wallets:
         wallet_lower = wallet.lower().strip()
         for chain, rpc in chains_to_scan:
-            latest = get_latest_block(rpc)
-            last_scan = state.get("last_scans", {}).get(chain, latest - 2000)
-            from_block = max(last_scan, latest - 2000)
+            try:
+                latest = get_latest_block(rpc)
+            except Exception as e:
+                print(f"[{chain.upper()}] RPC Error: {e}")
+                continue
+                
+            last_scan = state.get("last_scans", {}).get(chain, latest - 100)
+            from_block = max(last_scan, latest - 500)
             wallet_key = f"{chain}:{wallet_lower}"
 
             try:
@@ -92,11 +97,9 @@ def main():
                     history.insert(0, tx)
             history = history[:100]
 
-            if wallet_key not in state.setdefault("tx_history", {}):
-                state["tx_history"][wallet_key] = []
-            state["tx_history"][wallet_key] = history
+            state.setdefault("tx_history", {})[wallet_key] = history
 
-            if analysis["signal"] in ("strong_buy", "buy"):
+            if analysis["signal"] in ("strong_buy", "buy", "hold"):
                 alert_count += 1
                 send_alert(chat_id, wallet_lower, chain, analysis)
 
