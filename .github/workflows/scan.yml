@@ -3,6 +3,8 @@ name: Wallet Scanner
 on:
   schedule:
     - cron: '*/5 * * * *'   # Her 5 dakikada bir (Fatih istedi)
+  push:
+    branches: [ main ]      # Kod değiştiğinde de çalışsın
   workflow_dispatch:          # Manuel tetikleme için
 
 jobs:
